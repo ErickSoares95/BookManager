@@ -12,9 +12,8 @@ public class Book : BaseEntity
         PublicationYear = publicationYear;
         
         Status = BookStateEnum.Created;
+        Loans = [];
     }
-    
-    public Book(){}
 
     public string Title { get; private set; }
     
@@ -25,5 +24,6 @@ public class Book : BaseEntity
     public  int  PublicationYear { get; private set; }
     
     public BookStateEnum Status { get; private set; }
+    public List<UserBook> Loans { get; private set; }
 }
 

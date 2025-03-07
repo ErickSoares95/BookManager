@@ -1,6 +1,6 @@
 namespace BookManager.Core.Entities;
 
-public class User
+public class User : BaseEntity
 {
     public User(string fullName, string email, DateTime birthDate)
     {
@@ -10,12 +10,12 @@ public class User
         Active = true;
         
         
-        ActiveLoans = [];
+        Loans = [];
     }
 
     public string FullName { get; private set; }
     public string Email { get; private set; }
     public DateTime BirthDate { get; private set; }
     public bool Active { get; private set; }
-    public List<Book> ActiveLoans { get; private set; }
+    public List<UserBook> Loans { get; private set; }
 }
