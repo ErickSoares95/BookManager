@@ -14,6 +14,8 @@ public class Book : BaseEntity
         Status = BookStateEnum.Created;
         Loans = [];
     }
+    
+    public Book(){}
 
     public string Title { get; private set; }
     
