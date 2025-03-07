@@ -4,19 +4,16 @@ using BookManager.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace BookManager.Infrastructure.persistenceMigration
+namespace BookManager.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(BookManagerDbContext))]
-    [Migration("20250307190017_firstMigrationsBookManager")]
-    partial class firstMigrationsBookManager
+    partial class BookManagerDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
