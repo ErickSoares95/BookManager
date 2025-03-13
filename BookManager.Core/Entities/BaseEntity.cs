@@ -17,6 +17,7 @@
         public void SetAsDeleted()
         {
             IsDeleted = true;
+            SetAsUpdated();
         }
 
         public void SetAsUpdated()

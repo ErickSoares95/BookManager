@@ -15,4 +15,9 @@
       <ProjectReference Include="..\BookManager.Infrastructure\BookManager.Infrastructure.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Commands\BookCommands\LoanBook\" />
+      <Folder Include="Validators\" />
+    </ItemGroup>
+
 </Project>

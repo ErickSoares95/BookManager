@@ -27,5 +27,13 @@ public class Book : BaseEntity
     
     public BookStateEnum Status { get; private set; }
     public List<UserBook> Loans { get; private set; }
+
+    public void Update(string title, string author, string isbn, int publicationYear)
+    {
+        Title = title;
+        Author = author;
+        ISBN = isbn;
+        PublicationYear = publicationYear;
+    }
 }
 

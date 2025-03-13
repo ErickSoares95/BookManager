@@ -7,9 +7,9 @@ public class User : BaseEntity
         FullName = fullName;
         Email = email;
         BirthDate = birthDate;
+        
+        
         Active = true;
-        
-        
         Loans = [];
     }
 
@@ -18,4 +18,11 @@ public class User : BaseEntity
     public DateTime BirthDate { get; private set; }
     public bool Active { get; private set; }
     public List<UserBook> Loans { get; private set; }
+
+    public void Update(string fullName, string email, DateTime birthDate)
+    {
+        FullName = fullName;
+        Email = email;
+        BirthDate = birthDate;
+    }
 }
