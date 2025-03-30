@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookManager.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(BookManagerDbContext))]
-    [Migration("20250307190630_firstMigrationsBookManager")]
-    partial class firstMigrationsBookManager
+    [Migration("20250330155415_secondMigrationsBookManager")]
+    partial class secondMigrationsBookManager
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -65,6 +65,41 @@ namespace BookManager.Infrastructure.Persistence.Migrations
                     b.ToTable("Books");
                 });
 
+            modelBuilder.Entity("BookManager.Core.Entities.LoanBook", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("BookId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("ReturnDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("LoanBooks");
+                });
+
             modelBuilder.Entity("BookManager.Core.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -101,52 +136,17 @@ namespace BookManager.Infrastructure.Persistence.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("BookManager.Core.Entities.UserBook", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("IdBook")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdUser")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime>("ReturnDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdBook");
-
-                    b.HasIndex("IdUser");
-
-                    b.ToTable("UserBooks");
-                });
-
-            modelBuilder.Entity("BookManager.Core.Entities.UserBook", b =>
+            modelBuilder.Entity("BookManager.Core.Entities.LoanBook", b =>
                 {
                     b.HasOne("BookManager.Core.Entities.Book", "Book")
                         .WithMany("Loans")
-                        .HasForeignKey("IdBook")
+                        .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("BookManager.Core.Entities.User", "User")
                         .WithMany("Loans")
-                        .HasForeignKey("IdUser")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 

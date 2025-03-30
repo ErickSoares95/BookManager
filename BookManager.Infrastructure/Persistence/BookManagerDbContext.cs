@@ -12,7 +12,7 @@ public class BookManagerDbContext : DbContext
     }
         public DbSet<Book> Books { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<UserBook> UserBooks { get; set; }
+        public DbSet<LoanBook> LoanBooks { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -27,17 +27,17 @@ public class BookManagerDbContext : DbContext
                     e.HasKey(u => u.Id);
                 });
             builder
-                .Entity<UserBook>(e =>
+                .Entity<LoanBook>(e =>
                 {
                     e.HasKey(us => us.Id);
 
                     e.HasOne(p => p.Book)
                         .WithMany(p => p.Loans)
-                        .HasForeignKey(p => p.IdBook)
+                        .HasForeignKey(p => p.BookId)
                         .OnDelete(DeleteBehavior.Restrict);
                     e.HasOne(p => p.User)
                         .WithMany(u => u.Loans)
-                        .HasForeignKey (p => p.IdUser)
+                        .HasForeignKey (p => p.UserId)
                         .OnDelete(DeleteBehavior.Restrict);
                 });
             

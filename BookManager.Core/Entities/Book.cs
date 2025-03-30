@@ -4,6 +4,7 @@ namespace BookManager.Core.Entities;
 
 public class Book : BaseEntity
 {
+    public const string INVALID_STATE_MESSAGE = "Book is in invalid state";
     public Book(string title, string author, string isbn, int publicationYear)
     {
         Title = title;
@@ -11,7 +12,7 @@ public class Book : BaseEntity
         ISBN = isbn;
         PublicationYear = publicationYear;
         
-        Status = BookStateEnum.Created;
+        Status = BookStateEnum.Available;
         Loans = [];
     }
     
@@ -26,7 +27,7 @@ public class Book : BaseEntity
     public  int  PublicationYear { get; private set; }
     
     public BookStateEnum Status { get; private set; }
-    public List<UserBook> Loans { get; private set; }
+    public List<LoanBook> Loans { get; private set; }
 
     public void Update(string title, string author, string isbn, int publicationYear)
     {
@@ -34,6 +35,14 @@ public class Book : BaseEntity
         Author = author;
         ISBN = isbn;
         PublicationYear = publicationYear;
+    }
+
+    public void StartLoanBook()
+    {
+        if (Status != BookStateEnum.Available)
+            throw new InvalidOperationException(INVALID_STATE_MESSAGE);
+
+        Status = BookStateEnum.Reserved;
     }
 }
 

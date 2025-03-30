@@ -18,4 +18,8 @@
       <ProjectReference Include="..\BookManager.Core\BookManager.Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Persistence\Migrations\" />
+    </ItemGroup>
+
 </Project>

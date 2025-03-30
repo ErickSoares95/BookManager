@@ -48,9 +48,9 @@ public class BookRepository : IBookRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task AddLoan(UserBook userBook)
+    public async Task AddLoan(LoanBook loanBook)
     {
-        await _context.UserBooks.AddAsync(userBook);
+        await _context.LoanBooks.AddAsync(loanBook);
         await _context.SaveChangesAsync();
     }
 

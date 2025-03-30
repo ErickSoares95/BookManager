@@ -9,6 +9,6 @@ public interface IBookRepository
     Task<Book?> GetById(int id);
     Task<int> Add(Book book);
     Task Update(Book book);
-    Task AddLoan(UserBook userBook );
+    Task AddLoan(LoanBook loanBook );
     Task<bool> Exists(int id);
 }

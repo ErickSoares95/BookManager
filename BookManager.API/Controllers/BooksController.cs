@@ -1,5 +1,6 @@
 using BookManager.Application.Commands.BookCommands.DeleteBook;
 using BookManager.Application.Commands.BookCommands.InsertBook;
+using BookManager.Application.Commands.BookCommands.InsertLoanBook;
 using BookManager.Application.Commands.BookCommands.UpdateBook;
 using BookManager.Application.Queries.BookQueries.GetAllBooks;
 using BookManager.Application.Queries.BookQueries.GetBookDetailsById;
@@ -82,4 +83,16 @@ public class BooksController : ControllerBase
         }
         return NoContent();
     }
+    
+    [HttpPut("{id}/start")]
+    public async Task<IActionResult>  StartLoanBook(int id)
+    {
+        var result = await _mediator.Send(new StartLoanBookCommand());
+
+        if (!result.IsSuccess)
+        {
+            return BadRequest(result.Message);
+        }
+        return NoContent();
+    }   
 }
