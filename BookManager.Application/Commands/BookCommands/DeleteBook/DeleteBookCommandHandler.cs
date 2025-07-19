@@ -7,12 +7,12 @@ namespace BookManager.Application.Commands.BookCommands.DeleteBook;
 
 public class DeleteBookCommandHandler : IRequestHandler<DeleteBookCommand, ResultViewModel>
 {
-    private const string BookNotFoundMessage = "Book Not Found.";
     public DeleteBookCommandHandler(IBookRepository bookRepository)
     {
         _BookRepository = bookRepository;
     }
 
+    private const string BookNotFoundMessage = "Book Not Found.";
     private readonly IBookRepository _BookRepository;
     
     public async Task<ResultViewModel> Handle(DeleteBookCommand request, CancellationToken cancellationToken)

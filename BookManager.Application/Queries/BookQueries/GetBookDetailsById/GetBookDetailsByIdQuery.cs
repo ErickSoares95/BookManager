@@ -29,8 +29,6 @@ public class GetBookDetailsByIdQuery : IRequest<ResultViewModel<GetBookDetailsBy
     
     public  int  PublicationYear { get;  set; }
     
-    //TODO: Será incluido os imprestimos após próximas atualizações do projeto e dependendo da necessidade
-    
     public static GetBookDetailsByIdQuery FromEntity(Book book)
         => new(
             book.Id,

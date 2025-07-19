@@ -12,7 +12,8 @@ public class BookManagerDbContext : DbContext
     }
         public DbSet<Book> Books { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<LoanBook> LoanBooks { get; set; }
+        
+        public DbSet<Loan> Loans { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -20,22 +21,33 @@ public class BookManagerDbContext : DbContext
                 .Entity<Book>(e =>
                 {
                     e.HasKey(s => s.Id);
+                    
+                    e.HasMany(b => b.Loans)
+                        .WithOne(l => l.Book)
+                        .HasForeignKey(l => l.BookId)
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
             builder
                 .Entity<User>(e =>
                 {
                     e.HasKey(u => u.Id);
+                    
+                    e.HasMany(u => u.Loans)
+                        .WithOne(l => l.User)
+                        .HasForeignKey(u => u.UserId)
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
             builder
-                .Entity<LoanBook>(e =>
+                .Entity<Loan>(e =>
                 {
-                    e.HasKey(us => us.Id);
-
-                    e.HasOne(p => p.Book)
-                        .WithMany(p => p.Loans)
+                    e.HasKey(l => l.Id);
+                    
+                    e.HasOne(l => l.Book)
+                        .WithMany(b => b.Loans)
                         .HasForeignKey(p => p.BookId)
                         .OnDelete(DeleteBehavior.Restrict);
-                    e.HasOne(p => p.User)
+                    
+                    e.HasOne(l => l.User)
                         .WithMany(u => u.Loans)
                         .HasForeignKey (p => p.UserId)
                         .OnDelete(DeleteBehavior.Restrict);

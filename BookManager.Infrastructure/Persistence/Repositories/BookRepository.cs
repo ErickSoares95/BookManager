@@ -20,18 +20,13 @@ public class BookRepository : IBookRepository
             .ToListAsync();
         return books;
     }
-
+    
     public async Task<Book?> GetDetailsById(int id)
     {
         var books = await _context.Books
             .Include(b => b.Loans)
             .SingleOrDefaultAsync(b => b.Id == id);
         return books;
-    }
-
-    public async Task<Book?> GetById(int id)
-    {
-        return await _context.Books.SingleOrDefaultAsync(p => p.Id == id);
     }
 
     public async Task<int> Add(Book book)
@@ -48,14 +43,13 @@ public class BookRepository : IBookRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task AddLoan(LoanBook loanBook)
-    {
-        await _context.LoanBooks.AddAsync(loanBook);
-        await _context.SaveChangesAsync();
-    }
-
     public async Task<bool> Exists(int id)
     {
         return await _context.Books.AnyAsync(x => x.Id == id);
+    }
+    
+    public async Task<Book?> GetById(int id)
+    {
+        return await _context.Books.SingleOrDefaultAsync(p => p.Id == id);
     }
 }

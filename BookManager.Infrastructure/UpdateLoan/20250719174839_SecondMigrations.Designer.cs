@@ -4,16 +4,19 @@ using BookManager.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace BookManager.Infrastructure.Persistence.Migrations
+namespace BookManager.Infrastructure.UpdateLoan
 {
     [DbContext(typeof(BookManagerDbContext))]
-    partial class BookManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250719174839_SecondMigrations")]
+    partial class SecondMigrations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

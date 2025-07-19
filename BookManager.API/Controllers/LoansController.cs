@@ -1,18 +1,22 @@
 using BookManager.Application.Commands.BookCommands.DeleteBook;
 using BookManager.Application.Commands.BookCommands.InsertBook;
+using BookManager.Application.Commands.LoanCommands.InsertLoan;
 using BookManager.Application.Commands.BookCommands.UpdateBook;
+using BookManager.Application.Commands.LoanCommands.CompleteLoan;
+using BookManager.Application.Commands.LoanCommands.InsertLoan;
 using BookManager.Application.Queries.BookQueries.GetAllBooks;
 using BookManager.Application.Queries.BookQueries.GetBookDetailsById;
+using BookManager.Application.Queries.LoanQueries.GetLoanDetailsById;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookManager.API.Controllers;
 
 [ApiController]
-[Route("api/books")]
-public class BooksController : ControllerBase
+[Route("api/loans")]
+public class LoansController : ControllerBase
 {
-    public BooksController(IMediator mediator)
+    public LoansController(IMediator mediator)
     {
         _mediator = mediator;
     }
@@ -20,7 +24,7 @@ public class BooksController : ControllerBase
     private readonly IMediator _mediator;
 
     [HttpPost]
-    public async Task<IActionResult> Post(InsertBookCommand command)
+    public async Task<IActionResult> Post(InsertLoanCommand command)
     {
         var result = await _mediator.Send(command);
         
@@ -30,36 +34,23 @@ public class BooksController : ControllerBase
             return BadRequest(result.Message);
 
         return CreatedAtAction(nameof(GetById), new { id = result.Data }, command);
-        
     }
-    [HttpGet]
-    public async Task<IActionResult> GetBooks(string search = "")
-    {
-        var query = new GetAllBooksQuery();
-        
-        var results = await _mediator.Send(query);
-        
-        return Ok(results);
-    }
-
+    
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
-        var result = await _mediator.Send(new GetBookDetailsByIdQuery(id));
+        var result = await _mediator.Send(new GetLoanDetailsByIdQuery(id));
 
         if (!result.IsSuccess)
+        {
             return BadRequest(result.Message);
-        
+        }
         return Ok(result);
     }
-
-    [HttpPut("{id}")]
-    public async Task<IActionResult> Put(UpdateBookCommand command)
+    
+    [HttpPut("{id}/complete")]
+    public async Task<IActionResult>  CompleteLoanBook(CompleteLoanCommand command)
     {
-        var id = (HttpContext.Request.RouteValues["id"] ?? 0);
-        if ((id is null) || id == "0")
-            return BadRequest("Id is required");
-        
         var result = await _mediator.Send(command);
         
         if (!ModelState.IsValid)
@@ -67,19 +58,6 @@ public class BooksController : ControllerBase
         if (!result.IsSuccess)
             return BadRequest(result.Message);
         
-        return NoContent();
+        return Ok(result);
     }
-
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
-    {
-        var result = await _mediator.Send(new DeleteBookCommand(id));
-        
-        if (!result.IsSuccess)
-        {
-            return BadRequest(result.Message);
-        }
-        return NoContent();
-    }
-    
 }

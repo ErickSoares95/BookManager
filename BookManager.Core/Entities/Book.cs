@@ -27,7 +27,7 @@ public class Book : BaseEntity
     public  int  PublicationYear { get; private set; }
     
     public BookStateEnum Status { get; private set; }
-    public List<LoanBook> Loans { get; private set; }
+    public List<Loan> Loans { get; private set; }
 
     public void Update(string title, string author, string isbn, int publicationYear)
     {

@@ -4,9 +4,9 @@ using MediatR;
 
 namespace BookManager.Application.Queries.BookQueries.GetBookDetailsById;
 
-public class GetProjectDetailsByIdQueryHandler : IRequestHandler<GetBookDetailsByIdQuery, ResultViewModel<GetBookDetailsByIdQuery>>
+public class GetBookDetailsByIdQueryHandler : IRequestHandler<GetBookDetailsByIdQuery, ResultViewModel<GetBookDetailsByIdQuery>>
 {
-    public GetProjectDetailsByIdQueryHandler(IBookRepository bookRepository)
+    public GetBookDetailsByIdQueryHandler(IBookRepository bookRepository)
     {
         _bookRepository = bookRepository;
     }
