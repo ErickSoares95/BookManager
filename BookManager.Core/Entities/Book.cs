@@ -37,7 +37,7 @@ public class Book : BaseEntity
         PublicationYear = publicationYear;
     }
 
-    public void StartLoanBook()
+    public void StartLoan()
     {
         if (Status != BookStateEnum.Available)
             throw new InvalidOperationException(INVALID_STATE_MESSAGE);

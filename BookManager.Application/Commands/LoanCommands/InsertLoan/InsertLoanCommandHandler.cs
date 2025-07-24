@@ -30,7 +30,7 @@ public class InsertLoanCommandHandler :IRequestHandler<InsertLoanCommand, Result
         
         var book = await _bookRepository.GetById(request.BookId);
         
-        book.StartLoanBook();
+        book.StartLoan();
         
         await _bookRepository.Update(book);
 
