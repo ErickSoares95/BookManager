@@ -12,7 +12,7 @@ public class DeleteBookCommandHandler : IRequestHandler<DeleteBookCommand, Resul
         _BookRepository = bookRepository;
     }
 
-    private const string BookNotFoundMessage = "Book Not Found.";
+    public const string BOOK_NOT_FOUND_MESSAGE = "Book Not Found.";
     private readonly IBookRepository _BookRepository;
     
     public async Task<ResultViewModel> Handle(DeleteBookCommand request, CancellationToken cancellationToken)
@@ -21,7 +21,7 @@ public class DeleteBookCommandHandler : IRequestHandler<DeleteBookCommand, Resul
 
         if (book is null)
         {
-            return ResultViewModel.Error(BookNotFoundMessage);
+            return ResultViewModel.Error(BOOK_NOT_FOUND_MESSAGE);
         }
         
         book.SetAsDeleted();
