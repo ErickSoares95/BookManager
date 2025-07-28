@@ -1,6 +1,8 @@
 using BookManager.Application.Commands.BookCommands.InsertBook;
 using BookManager.Core.Entities;
 using BookManager.Core.Repository;
+using FluentAssertions;
+using Moq;
 using NSubstitute;
 
 namespace TestProject1BookManager.UnitTests.Application;
@@ -8,6 +10,42 @@ namespace TestProject1BookManager.UnitTests.Application;
 public class InsertBookHandlerTests
 {
     private const int ID = 1;
+    
+    [Fact]
+    public async Task InputDataAreOk_Insert_Success_Moq()
+    {
+        //Arrange
+        // var mock = new Mock<IBookRepository>();
+        // mock.Setup(r => r.Add(It.IsAny<Book>())).ReturnsAsync(ID);
+    
+        var repository = Mock.Of<IBookRepository>(r => r.Add(It.IsAny<Book>()) == Task.FromResult(ID));
+        
+        var command = new InsertBookCommand
+        {
+            Title = "Harry Potter",
+            Author = "J.K Rowling",
+            ISBN = "9788869183157",
+            PublicationYear = 1997
+        };
+        
+        var handler = new InsertBookCommandHandler(repository);
+        
+        //Act
+        var result = await handler.Handle(command, new CancellationToken());
+        
+        //Assert
+        Assert.True(result.IsSuccess);
+        Assert.Equal(ID, result.Data);
+        
+        //Assert with FluentAssertions
+        result.IsSuccess.Should().BeTrue();
+        result.Data.Should().Be(ID);
+        
+        // mock.Verify(r => r.Add(It.IsAny<Book>()), Times.Once);
+        Mock.Get(repository).Verify(r => r.Add(It.IsAny<Book>()), Times.Once);
+    }
+    
+    
     [Fact]
     public async Task InputDataAreOk_Insert_Success_NSubstitute()
     {
