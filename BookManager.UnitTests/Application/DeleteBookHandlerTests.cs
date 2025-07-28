@@ -4,6 +4,7 @@ using BookManager.Core.Repository;
 using FluentAssertions;
 using Moq;
 using NSubstitute;
+using TestProject1BookManager.UnitTests.Fakes;
 
 namespace TestProject1BookManager.UnitTests.Application;
 
@@ -15,12 +16,7 @@ public class DeleteBookHandlerTests
     public async Task ProjectExists_Delete_Success_NSubstitute()
     {
         //Arrange
-        var book = new Book(
-            "Harry Potter",
-            "J.K Rowling",
-            "9788869183157",
-            1997
-        );
+        var book = FakeDataHelper.CreateBook();
         
         var repository = Substitute.For<IBookRepository>();
         repository.GetById(ID).Returns(Task.FromResult<Book?>(book));
@@ -46,7 +42,7 @@ public class DeleteBookHandlerTests
     public async Task ProjectExists_Delete_Success_Moq()
     {
         //Arrange
-        var book = new Book("Harry Potter", "J.K Rowling", "9788869183157", 1997);
+        var book = FakeDataHelper.CreateBook();
 
         var repository = Mock.Of<IBookRepository>(b =>
             b.GetById(It.IsAny<int>()) == Task.FromResult(book) &&

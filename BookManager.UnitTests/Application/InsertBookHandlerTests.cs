@@ -4,6 +4,7 @@ using BookManager.Core.Repository;
 using FluentAssertions;
 using Moq;
 using NSubstitute;
+using TestProject1BookManager.UnitTests.Fakes;
 
 namespace TestProject1BookManager.UnitTests.Application;
 
@@ -20,13 +21,7 @@ public class InsertBookHandlerTests
     
         var repository = Mock.Of<IBookRepository>(r => r.Add(It.IsAny<Book>()) == Task.FromResult(ID));
         
-        var command = new InsertBookCommand
-        {
-            Title = "Harry Potter",
-            Author = "J.K Rowling",
-            ISBN = "9788869183157",
-            PublicationYear = 1997
-        };
+        var command = FakeDataHelper.CreateFakeInsertBookCommand();
         
         var handler = new InsertBookCommandHandler(repository);
         
@@ -53,13 +48,7 @@ public class InsertBookHandlerTests
         var repository = Substitute.For<IBookRepository>();
         repository.Add(Arg.Any<Book>()).Returns(Task.FromResult(ID));
 
-        var command = new InsertBookCommand
-        {
-            Title = "Harry Potter",
-            Author = "J.K Rowling",
-            ISBN = "9788869183157",
-            PublicationYear = 1997
-        };
+        var command = FakeDataHelper.CreateFakeInsertBookCommand();
         
         var handler = new InsertBookCommandHandler(repository);
         

@@ -2,6 +2,7 @@ using BookManager.Core.Entities;
 using BookManager.Core.Enums;
 using FluentAssertions;
 using NSubstitute.ExceptionExtensions;
+using TestProject1BookManager.UnitTests.Fakes;
 
 namespace TestProject1BookManager.UnitTests.Core;
 
@@ -12,12 +13,7 @@ public class BookTests
     public void BookIsCreated_StartLoan_Success()
     {
         //Arrange
-         var book = new Book(
-             "Harry Potter",
-             "J.K Rowling",
-             "9788869183157",
-             199
-        );
+        var book = FakeDataHelper.CreateBook();
         
         //Act
         book.StartLoan();
@@ -35,7 +31,7 @@ public class BookTests
     public void BookIsInInvalidState_Start_ThrowsException()
     {
         //arrange
-         var book = new Book("Harry Potter", "J.K Rowling", "9788869183157", 1997);
+        var book = FakeDataHelper.CreateBook();
          book.StartLoan();
          
          //Act + Assert
