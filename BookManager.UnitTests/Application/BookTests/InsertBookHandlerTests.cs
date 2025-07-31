@@ -6,7 +6,7 @@ using Moq;
 using NSubstitute;
 using TestProject1BookManager.UnitTests.Fakes;
 
-namespace TestProject1BookManager.UnitTests.Application;
+namespace TestProject1BookManager.UnitTests.Application.BookTests;
 
 public class InsertBookHandlerTests
 {
@@ -16,15 +16,13 @@ public class InsertBookHandlerTests
     public async Task InputDataAreOk_Insert_Success_Moq()
     {
         //Arrange
-        // var mock = new Mock<IBookRepository>();
-        // mock.Setup(r => r.Add(It.IsAny<Book>())).ReturnsAsync(ID);
-    
-        var repository = Mock.Of<IBookRepository>(r => r.Add(It.IsAny<Book>()) == Task.FromResult(ID));
+        var repository = Mock.Of<IBookRepository>(r =>
+            r.Add(It.IsAny<Book>()) == Task.FromResult(ID));
         
         var command = FakeDataHelper.CreateFakeInsertBookCommand();
         
         var handler = new InsertBookCommandHandler(repository);
-        
+            
         //Act
         var result = await handler.Handle(command, new CancellationToken());
         
@@ -36,7 +34,6 @@ public class InsertBookHandlerTests
         result.IsSuccess.Should().BeTrue();
         result.Data.Should().Be(ID);
         
-        // mock.Verify(r => r.Add(It.IsAny<Book>()), Times.Once);
         Mock.Get(repository).Verify(r => r.Add(It.IsAny<Book>()), Times.Once);
     }
     

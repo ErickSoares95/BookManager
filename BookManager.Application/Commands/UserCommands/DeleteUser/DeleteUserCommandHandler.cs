@@ -11,7 +11,7 @@ public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, Resul
         _userRepository = userRepository;
     }
 
-    private const string UserNotFoundMessage = "User not found";
+    public const string USER_NOT_FOUND_MESSAGE = "User not found";
 
     private readonly IUserRepository _userRepository;
     
@@ -20,7 +20,7 @@ public class DeleteUserCommandHandler : IRequestHandler<DeleteUserCommand, Resul
         var user = await _userRepository.GetById(request.Id);
 
         if (user == null)
-            return ResultViewModel.Error(UserNotFoundMessage);
+            return ResultViewModel.Error(USER_NOT_FOUND_MESSAGE);
         
         user.SetAsDeleted();
         
