@@ -29,4 +29,9 @@ public class Loan : BaseEntity
 
         Status = LoanStateEnum.Complete;
     }
+
+    public void LoanUpdate(LoanStateEnum status)
+    {
+        Status = status;
+    }
 }

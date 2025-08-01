@@ -13,7 +13,7 @@ public class UpdateBookHandlerTests
     public const string BOOK_NOT_FOUND_MESSAGE = "Book Not Found";
     
     [Fact]
-    public async Task BookExistis_Update_Success_NSubstitute()
+    public async Task BookExists_Update_Success_NSubstitute()
     {
         //Arrange
         var book = FakeDataHelper.CreateBook();
