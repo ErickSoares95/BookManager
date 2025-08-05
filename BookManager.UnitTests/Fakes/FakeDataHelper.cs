@@ -3,6 +3,7 @@ using BookManager.Application.Commands.BookCommands.DeleteBook;
 using BookManager.Application.Commands.BookCommands.InsertBook;
 using BookManager.Application.Commands.UserCommands.InsertUser;
 using BookManager.Core.Entities;
+using BookManager.Core.Enums;
 
 namespace TestProject1BookManager.UnitTests.Fakes;
 
@@ -38,7 +39,9 @@ public class FakeDataHelper
         .CustomInstantiator(u => new User(
             u.Name.FullName(),
             u.Internet.Email(),
-            u.Date.Past(30)
+            u.Date.Past(30),
+            u.Internet.Password(),
+        u.PickRandom<Role>()
         ));
 
     private static readonly Faker<InsertUserCommand> _insertUserCommandFaker = new Faker<InsertUserCommand>()

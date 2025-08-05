@@ -1,8 +1,10 @@
+using BookManager.Core.Enums;
+
 namespace BookManager.Core.Entities;
 
 public class User : BaseEntity
 {
-    public User(string fullName, string email, DateTime birthDate, string password, string role)
+    public User(string fullName, string email, DateTime birthDate, string password, Role role)
     {
         FullName = fullName;
         Email = email;
@@ -20,7 +22,7 @@ public class User : BaseEntity
     public DateTime BirthDate { get; private set; }
     public bool Active { get; private set; }
     public string Password {get; private set;}
-    public  string Role { get; private set; }
+    public  Role Role { get; private set; }
     public List<Loan> Loans { get; private set; }
 
     public void Update(string fullName, string email, DateTime birthDate)
