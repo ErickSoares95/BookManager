@@ -1,15 +1,19 @@
 using BookManager.Application.Commands.UserCommands.DeleteUser;
 using BookManager.Application.Commands.UserCommands.InsertUser;
+using BookManager.Application.Commands.UserCommands.LoginUser;
 using BookManager.Application.Commands.UserCommands.UpdateUser;
 using BookManager.Application.Queries.UserQueries.GetAllUsers;
 using BookManager.Application.Queries.UserQueries.GetUserDetailsById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookManager.API.Controllers;
 
 [ApiController]
 [Route("api/users")]
+[Authorize]
 public class UsersController : ControllerBase
 {
     public UsersController(IMediator mediator)
@@ -20,6 +24,7 @@ public class UsersController : ControllerBase
     private readonly IMediator _mediator;
     
     [HttpPost]
+    [AllowAnonymous]
     public async Task<IActionResult> Post(InsertUserCommand command)
     {
         var result = await _mediator.Send(command);
@@ -81,5 +86,19 @@ public class UsersController : ControllerBase
             return BadRequest(result.Message);
         }
         return NoContent();
+    }
+
+    [HttpPut("login")]
+    [AllowAnonymous]
+    public async Task<IActionResult> Login(LoginUserCommand command)
+    {
+        var result = await _mediator.Send(command);
+        
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+        if (!result.IsSuccess)
+            return BadRequest(result.Message);
+
+        return Ok(result);
     }
 }

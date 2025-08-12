@@ -4,12 +4,14 @@ using BookManager.Application.Commands.BookCommands.UpdateBook;
 using BookManager.Application.Queries.BookQueries.GetAllBooks;
 using BookManager.Application.Queries.BookQueries.GetBookDetailsById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookManager.API.Controllers;
 
 [ApiController]
 [Route("api/books")]
+[Authorize]
 public class BooksController : ControllerBase
 {
     public BooksController(IMediator mediator)
@@ -33,6 +35,7 @@ public class BooksController : ControllerBase
         
     }
     [HttpGet]
+    [Authorize]
     public async Task<IActionResult> GetBooks(string search = "")
     {
         var query = new GetAllBooksQuery();
@@ -43,6 +46,7 @@ public class BooksController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [Authorize]
     public async Task<IActionResult> GetById(int id)
     {
         var result = await _mediator.Send(new GetBookDetailsByIdQuery(id));

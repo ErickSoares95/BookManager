@@ -1,6 +1,7 @@
 using BookManager.Application.Commands.UserCommands.InsertUser;
 using BookManager.Core.Entities;
 using BookManager.Core.Repository;
+using BookManager.Infrastructure.Auth;
 using NSubstitute;
 using TestProject1BookManager.UnitTests.Fakes;
 
@@ -15,11 +16,12 @@ public class InsertUserHandlerTests
     {
         //Arrange
         var repository = Substitute.For<IUserRepository>();
+        var authService = Substitute.For<IAuthService>();
         repository.Add(Arg.Any<User>()).Returns(Task.FromResult(ID));
 
         var command = FakeDataHelper.CreateFakeInsertUserCommand();
         
-        var handler = new InsertUserCommandHandler(repository);
+        var handler = new InsertUserCommandHandler(repository, authService);
         
         //Act
         var result = await handler.Handle(command, new CancellationToken());

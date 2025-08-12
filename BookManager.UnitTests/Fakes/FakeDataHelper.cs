@@ -41,7 +41,8 @@ public class FakeDataHelper
             u.Internet.Email(),
             u.Date.Past(30),
             u.Internet.Password(),
-        u.PickRandom<Role>()
+            u.Name.JobTitle()
+        // u.PickRandom<Role>()
         ));
 
     private static readonly Faker<InsertUserCommand> _insertUserCommandFaker = new Faker<InsertUserCommand>()

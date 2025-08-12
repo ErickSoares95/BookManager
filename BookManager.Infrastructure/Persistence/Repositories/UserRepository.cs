@@ -31,7 +31,12 @@ public class UserRepository : IUserRepository
 
     public async Task<User?> GetById(int id)
     {
-        return await _context.Users.SingleOrDefaultAsync(p => p.Id == id);
+        return await _context.Users.SingleOrDefaultAsync(u => u.Id == id);
+    }
+    
+    public async Task<User?> GetByEmailAndPassword(string email, string hash)
+    {
+        return await _context.Users.SingleOrDefaultAsync(u => u.Email == email && u.Password == hash);
     }
 
     public async Task<int> Add(User user)

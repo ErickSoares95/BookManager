@@ -1,4 +1,6 @@
 
+using BookManager.Core.Enums;
+
 namespace BookManager.Infrastructure.Auth;
 
 public interface IAuthService

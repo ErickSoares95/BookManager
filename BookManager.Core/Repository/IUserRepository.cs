@@ -10,4 +10,5 @@ public interface IUserRepository
     Task<int> Add(User book);
     Task Update(User book);
     Task<bool> Exists(int id);
+    Task<User?> GetByEmailAndPassword(string email, string password);
 }
