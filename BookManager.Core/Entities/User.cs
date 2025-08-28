@@ -30,4 +30,9 @@ public class User : BaseEntity
         Email = email;
         BirthDate = birthDate;
     }
+
+    public void UpdatePassword(string password)
+    {
+        Password = password;
+    }
 }

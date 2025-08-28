@@ -38,6 +38,11 @@ public class UserRepository : IUserRepository
     {
         return await _context.Users.SingleOrDefaultAsync(u => u.Email == email && u.Password == hash);
     }
+    
+    public async Task<User?> GetByEmail(string email)
+    {
+        return await _context.Users.SingleOrDefaultAsync(u => u.Email == email);
+    }
 
     public async Task<int> Add(User user)
     {

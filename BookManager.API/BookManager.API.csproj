@@ -5,6 +5,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <RootNamespace>BookManager.API</RootNamespace>
+        <UserSecretsId>14c090d8-a333-45e7-8ec3-02a221673025</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>

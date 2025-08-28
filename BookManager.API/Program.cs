@@ -21,6 +21,8 @@ builder.Services
     .AddInfrastructure(builder.Configuration)
     .AddSwaggerConfiguration();;
 
+builder.Services.AddMemoryCache();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

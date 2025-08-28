@@ -2,6 +2,7 @@ using System.Text;
 using BookManager.Infrastructure.Persistence;
 using BookManager.Core.Repository;
 using BookManager.Infrastructure.Auth;
+using BookManager.Infrastructure.Notifications;
 using BookManager.Infrastructure.Persistence.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using SendGrid.Extensions.DependencyInjection;
 
 namespace BookManager.Infrastructure
 {
@@ -19,7 +21,8 @@ namespace BookManager.Infrastructure
             services
                 .AddRepositories()
                 .AddData(configuration)
-                .AddAuth(configuration);
+                .AddAuth(configuration)
+                .AddEmailService(configuration);
             
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
@@ -105,6 +108,16 @@ namespace BookManager.Infrastructure
                     Array.Empty<string>() // Permissões vazias, significa que qualquer token válido é aceito
                 }
             });
+        }
+        private static IServiceCollection AddEmailService(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddSendGrid(o =>
+            {
+                o.ApiKey = configuration.GetValue<string>("SendGrid:ApiKey");
+            });
+            
+            services.AddScoped<IEmailService, EmailService>();
+            return services;
         }
     }
 }

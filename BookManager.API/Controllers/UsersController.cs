@@ -1,6 +1,9 @@
 using BookManager.Application.Commands.UserCommands.DeleteUser;
 using BookManager.Application.Commands.UserCommands.InsertUser;
 using BookManager.Application.Commands.UserCommands.LoginUser;
+using BookManager.Application.Commands.UserCommands.RecoveryPassword.ChangePassword;
+using BookManager.Application.Commands.UserCommands.RecoveryPassword.Request;
+using BookManager.Application.Commands.UserCommands.RecoveryPassword.Validate;
 using BookManager.Application.Commands.UserCommands.UpdateUser;
 using BookManager.Application.Queries.UserQueries.GetAllUsers;
 using BookManager.Application.Queries.UserQueries.GetUserDetailsById;
@@ -91,6 +94,42 @@ public class UsersController : ControllerBase
     [HttpPut("login")]
     [AllowAnonymous]
     public async Task<IActionResult> Login(LoginUserCommand command)
+    {
+        var result = await _mediator.Send(command);
+        
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+        if (!result.IsSuccess)
+            return BadRequest(result.Message);
+
+        return Ok(result);
+    }
+
+    [HttpPost("password-recovery/request")]
+    public async Task<IActionResult> RequestPassword(PasswordRecoveyRequestCommand command)
+    {
+        var result = await _mediator.Send(command);
+        
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+        if (!result.IsSuccess)
+            return BadRequest(result.Message);
+
+        return Ok(result);
+    }
+    [HttpPost("password-recovery/validate")]
+    public async Task<IActionResult> RequestPassword(PasswordRecoveyValidateCommand command)
+    {
+        var result = await _mediator.Send(command);
+        
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+        if (!result.IsSuccess)
+            return BadRequest(result.Message);
+
+        return Ok(result);
+    }[HttpPost("password-recovery/change")]
+    public async Task<IActionResult> RequestPassword(PasswordRecoveyChangeCommand command)
     {
         var result = await _mediator.Send(command);
         
