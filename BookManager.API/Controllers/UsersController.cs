@@ -104,7 +104,7 @@ public class UsersController : ControllerBase
 
         return Ok(result);
     }
-
+    [AllowAnonymous]
     [HttpPost("password-recovery/request")]
     public async Task<IActionResult> RequestPassword(PasswordRecoveyRequestCommand command)
     {
@@ -117,6 +117,7 @@ public class UsersController : ControllerBase
 
         return Ok(result);
     }
+    [AllowAnonymous]
     [HttpPost("password-recovery/validate")]
     public async Task<IActionResult> RequestPassword(PasswordRecoveyValidateCommand command)
     {
@@ -128,7 +129,9 @@ public class UsersController : ControllerBase
             return BadRequest(result.Message);
 
         return Ok(result);
-    }[HttpPost("password-recovery/change")]
+    }
+    [AllowAnonymous]
+    [HttpPost("password-recovery/change")]
     public async Task<IActionResult> RequestPassword(PasswordRecoveyChangeCommand command)
     {
         var result = await _mediator.Send(command);
